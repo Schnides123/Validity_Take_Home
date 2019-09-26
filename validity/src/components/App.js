@@ -14,8 +14,8 @@ class App extends Component {
 		fileName: null,
 		colNames: [],
 		settings: {
-			minMatches: 2,
-			maxDistance: 2,
+			minMatches: 5,
+			maxDistance: 3,
 			ignoreColumns: []
 		},
 		exact: null,
