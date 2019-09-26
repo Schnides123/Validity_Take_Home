@@ -13,7 +13,6 @@ const getDuplicates = (csvdata, settings, callback) => fetch("http://localhost:3
 		return response.json();
 	})
 	.then(data => {
-        console.log(data);
         if(typeof data === "object" && data !== null) callback(data);
 	})
 	.catch(error => {

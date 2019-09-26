@@ -53,7 +53,7 @@ const CSVLoader = ({ handleFile, handleSubmit, fileName }) => {
 								</Typography>
 								<DropzoneArea
 									onChange={handleFile}
-									acceptedFiles={["text/csv"]}
+									acceptedFiles={[".csv"]}
 									filesLimit={1}
 									dropzoneText={
 										fileName
