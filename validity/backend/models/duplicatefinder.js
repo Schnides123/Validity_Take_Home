@@ -2,7 +2,8 @@ const levenshtein = require("js-levenshtein");
 
 class DuplicateFinder {
 	constructor(data) {
-		this.data = data;
+        if (typeof data !== 'object' || !Array.isArray(data) || typeof (data[0] || {}) !== 'object' || data[0] === null) return;
+        this.data = data;
 		this.keys = Object.keys(data[0] || {});
 	}
 	/**
@@ -11,9 +12,9 @@ class DuplicateFinder {
 	 * @return boolean
 	 */
 	validate() {
-		if (Array.isArray(this.data)) return false;
+		if (this.data === undefined) return false;
 		for (let row of this.data) {
-			if (!Object.isObject(row)) return false;
+			if (typeof row !== 'object' || row === null) return false;
 			for (let key of this.keys) {
 				if (!(key in row)) return false;
 			}
@@ -65,7 +66,7 @@ class DuplicateFinder {
 	 *
 	 * @return array
 	 */
-	possibleDuplicates(minMatches, maxDistance, ignoreColumns = []) {
+	possibleDuplicates(minMatches=1, maxDistance=2, ignoreColumns = []) {
 		const duplicates = [];
 		//lets use our existing function to make a quick lookup table
 		const exacts = this.exactDuplicates()
@@ -86,7 +87,7 @@ class DuplicateFinder {
 				// no need to duplicate our duplicates.
 				if (generateKey(rowA) === generateKey(rowB)) continue;
 				for (let key of this.keys) {
-					if (key in ignoreColumns) continue;
+					if (ignoreColumns.indexOf(key) > -1) continue;
 					if ((rowA[key] || "") === (rowB[key] || "")) {
 						distances[key] = 0;
 					} else
